@@ -1,8 +1,8 @@
-from sshPT import *
+from transport import *
 
 def main():
     try:
-        get_transport_instance('SSH').cat_file('test1123')
+        get_transport_instance('SSH').cat_file('test')
     except TransportIOError:
         return 2
     except TransportConnectionError:
