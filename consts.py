@@ -15,10 +15,8 @@ SCANDATA =  '''
 
 DB_NAME = 'control.db'
 
-STATUSES = dict(enumerate(
-        ["STATUS_COMPLIANT",
-         "STATUS_NOT_COMPLIANT",
-         "STATUS_NOT_APPLICABLE",
-         "STATUS_ERROR",
-         "STATUS_EXCEPTION"]
-        ,1))
+STATUSES = {1: 'STATUS_COMPLIANT', 
+            2: 'STATUS_NOT_COMPLIANT', 
+            3: 'STATUS_NOT_APPLICABLE', 
+            4: 'STATUS_ERROR', 
+            5: 'STATUS_EXCEPTION'}
