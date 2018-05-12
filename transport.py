@@ -96,6 +96,9 @@ class SSHTransport():
     def __del__(self):
         self.client.close()
 
+    def close(self):
+        self.client.close()
+    
     def exec(self,command):
         try:
             return self.client.exec_command(command) #Так удобнее будет работать с stdin, stdout, stderr
@@ -161,5 +164,8 @@ class SQLTransport():
         return None
     
     def __del__(self):
+        self.connection.close()
+        
+    def close(self):
         self.connection.close()
     
