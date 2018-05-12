@@ -9,9 +9,6 @@ from transport import *
 from db_manager import *
 from reporting import *
 
-DB_NAME = 'control.db'
-
-
 if __name__ == '__main__':
     start_time = time()
     prepare_db()

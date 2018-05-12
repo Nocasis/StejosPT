@@ -27,7 +27,6 @@ def make_report(scan_time):
     checks_counts.update([i for i in STATUSES.values()])
     for check in checks_counts: checks_counts[check] -=1
 
-
     compliances = cursor.execute('''
         SELECT * FROM scandata AS t1
         INNER JOIN control AS t2

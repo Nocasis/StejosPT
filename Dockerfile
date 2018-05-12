@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 RUN apt-get -qq update && apt-get install -qq -y python3
-RUN apt-get update && apt-get install -y openssh-server iproute2 #iproute может быть не нужен?  
+RUN apt-get update && apt-get install -y openssh-server iproute2
 RUN mkdir /var/run/sshd
 RUN echo 'root:ssh_test' | chpasswd
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
