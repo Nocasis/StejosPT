@@ -2,8 +2,8 @@ import paramiko
 import socket
 import json
 import pymysql
-from paramiko.ssh_exception import *
-from pymysql.err import *
+from paramiko.ssh_exception import AuthenticationException, NoValidConnectionsError, SSHException
+from pymysql.err import InternalError, OperationalError, ProgrammingError
 
 _config = None
 
