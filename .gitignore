@@ -1,6 +1,10 @@
 *.swp
+*~
+ptpy-p3-master/*
+ptpy-p2-master/*
 */__pycache__
 __pycache__
+scripts/__pycache__/*
 *pytest_cache
 control.db
 test.py

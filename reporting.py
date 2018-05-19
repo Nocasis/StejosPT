@@ -7,17 +7,7 @@ from weasyprint import HTML, CSS
 from time import asctime
 from collections import Counter
 from consts import *
-
-def take_compliance(compliance): #not used
-    return{
-        "id"          :  compliance[0],
-        "status"      :  compliance[1],
-        "description" :  compliance[3],
-        "title"       :  compliance[4],
-        "requirements":  compliance[5],
-        "transport"   :  compliance[6]}
     
-
 def make_report(scan_time):
     db = get_db()
     cursor = db.cursor()
