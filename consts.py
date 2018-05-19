@@ -20,3 +20,5 @@ STATUSES = {1: 'STATUS_COMPLIANT',
             3: 'STATUS_NOT_APPLICABLE', 
             4: 'STATUS_ERROR', 
             5: 'STATUS_EXCEPTION'}
+
+RETURN_VALUE = {value:key for key, value in STATUSES.items()}

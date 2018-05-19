@@ -1,12 +1,13 @@
 from transport import *
+from consts import RETURN_VALUE
 
 def main():
     try:
         get_transport_instance('SSH').cat_file('test')
     except TransportIOError:
-        return 2
+        return RETURN_VALUE['STATUS_NOT_COMPLIANT']
     except TransportConnectionError:
-        return 4
+        return RETURN_VALUE['STATUS_ERROR']
     except TransportError:
-        return 5
-    return 1
+        return RETURN_VALUE['STATUS_EXCEPTION']
+    return RETURN_VALUE['STATUS_COMPLIANT']
