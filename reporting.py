@@ -40,7 +40,8 @@ def render_data(scan_time, env_conf, compliances, transports_data):
         'transports'  : transports_data,
         'comp_data'   : compliances
         }
-def report(rendered_data):
+
+def render_report(rendered_data):
     env = Environment(
         loader=FileSystemLoader('templates'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -60,7 +61,7 @@ def make_report(scan_time):
     transports_data = get_transport_data(compliances, env_conf)
     rendered_data = render_data(scan_time, env_conf, compliances, transports_data)
     rendered_data.update(checks_counts)
-    report(rendered_data)
+    render_report(rendered_data)
     
     db.close()
 
