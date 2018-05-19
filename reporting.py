@@ -8,39 +8,31 @@ from time import asctime
 from collections import Counter
 from consts import *
     
-def make_report(scan_time):
-    db = get_db()
-    cursor = db.cursor()
-    
-    #Count statuses occurances
+def get_status_count(cursor):
     comp_status = cursor.execute("SELECT status FROM scandata").fetchall()
     checks_counts = Counter([status[0][2:-2] for status in comp_status])
     checks_counts.update([i for i in STATUSES.values()])
     for check in checks_counts: checks_counts[check] -=1
+    return checks_counts
 
-    compliances = cursor.execute('''
+def get_compliances(cursor):
+    cursor.execute('''
         SELECT * FROM scandata AS t1
         INNER JOIN control AS t2
-        ON t1.id=t2.id''')#.fetchall()
+        ON t1.id=t2.id''')
     columns_names = map(lambda x: x[0], cursor.description)
     compliances = [dict(zip(columns_names, compliance)) for compliance in cursor.fetchall()]
-    transports_used = set()
-    comps_data = list()
+    return compliances
 
-    for compliance in compliances:
-        transports_used.add(compliance['transport'])
-        '''comps_data.append({"id"          :compliance['id'],
-                           "title"       :compliance['title'],
-                           "description" :compliance['description'],
-                           "requirements":compliance['requirements'],
-                           "status"      :compliance['status']})'''
-    
-    #Transport data
-    with open("./env.json") as f: env_conf = json.load(f)
+def get_transport_data(compliances, env_conf):
+    transports_used = set()
+    for compliance in compliances: transports_used.add(compliance['transport'])
     transports_data = {transport: env_conf['transports'][transport.upper()] for transport in transports_used}
     for transport in transports_data.values(): transport.pop('password')
-    
-    render_data = {
+    return transports_data
+
+def render_data(scan_time, env_conf, compliances, transports_data):
+    return {
         'scan_date'   : asctime(),
         'scan_time'   : scan_time,
         'system_host' : env_conf['host'],
@@ -48,15 +40,27 @@ def make_report(scan_time):
         'transports'  : transports_data,
         'comp_data'   : compliances
         }
-    render_data.update(checks_counts)
-    #print(render_data)
-    #report
+def report(rendered_data):
     env = Environment(
         loader=FileSystemLoader('templates'),
         autoescape=select_autoescape(['html', 'xml'])
     )
-    rendered_template = env.get_template('index.html').render(data = render_data)
+    rendered_template = env.get_template('index.html').render(data = rendered_data)
     styles = [CSS(filename='./templates/style.css')]
     HTML(string = rendered_template).write_pdf('report.pdf', stylesheets=styles)
+    
+def make_report(scan_time):
+    db = get_db()
+    cursor = db.cursor()
+    checks_counts = get_status_count(cursor)
+    compliances = get_compliances(cursor)
+    
+    with open("./env.json") as f: env_conf = json.load(f)
+    
+    transports_data = get_transport_data(compliances, env_conf)
+    rendered_data = render_data(scan_time, env_conf, compliances, transports_data)
+    rendered_data.update(checks_counts)
+    report(rendered_data)
+    
     db.close()
 
