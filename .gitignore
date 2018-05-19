@@ -4,3 +4,4 @@ __pycache__
 *pytest_cache
 control.db
 test.py
+scripts/__pycache__/000_test_file_exists.cpython-36.pyc

@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 import os
-import json
 import importlib
 import re
 
 from time import time
-from transport import *
 from db_manager import *
 from reporting import *
+from sys import exit
 
 if __name__ == '__main__':
     start_time = time()
-    prepare_db()
+    try:
+        prepare_db()
+    except:
+        exit("ERROR: prepare_db")
     for script in [name for name in os.listdir('./scripts') if re.match(".+\.py",name)]:
         result = importlib.import_module("scripts." + script.split('.')[0]).main()
         add_control(int(script[:3]), result)

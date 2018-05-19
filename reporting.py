@@ -2,7 +2,7 @@ import json
 
 from db_manager import *
 
-from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from weasyprint import HTML, CSS
 from time import asctime
 from collections import Counter
