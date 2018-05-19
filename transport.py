@@ -99,15 +99,18 @@ class SSHTransport():
     def close(self):
         self.client.close()
     
-    def exec(self,command):
+    def exec(self, command, debug = False):
         try:
-            return self.client.exec_command(command) #Так удобнее будет работать с stdin, stdout, stderr
-            """stdin, stdout, stderr = self.client.exec_command(command) 
-            data = stdout.readlines() + stderr.readlines()      #data = stdout.read() + stderr.read()
-            data = [line[:-1] for line in data]
-            for line in data:
-                print (line)
-            return data"""
+            if debug:
+                return self.client.exec_command(command) #Так удобнее будет работать с stdin, stdout, stderr
+            else:
+                stdin, stdout, stderr = self.client.exec_command(command) 
+                data = stdout.readlines() + stderr.readlines()      #data = stdout.read() + stderr.read()
+                data = [line[:-1] for line in data]
+                for line in data:
+                    print (line)
+                return data
+        
         except SSHException:
             raise TransportConnectionError("SSHException with command")
         

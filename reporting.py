@@ -6,6 +6,7 @@ from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoesca
 from weasyprint import HTML, CSS
 from time import asctime
 from collections import Counter
+from consts import *
 
 def take_compliance(compliance): #not used
     return{
@@ -67,4 +68,5 @@ def make_report(scan_time):
     rendered_template = env.get_template('index.html').render(data = render_data)
     styles = [CSS(filename='./templates/style.css')]
     HTML(string = rendered_template).write_pdf('report.pdf', stylesheets=styles)
+    db.close()
 

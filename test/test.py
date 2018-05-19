@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from sshPT import *
+from transport import *
 import pytest
 
 def test_init():

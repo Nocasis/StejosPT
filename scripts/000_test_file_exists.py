@@ -2,7 +2,8 @@ from transport import *
 
 def main():
     try:
-        get_transport_instance('SSH').cat_file('test')
+        tr = get_transport_instance('SSH').cat_file('test')
+        tr.close()
     except TransportIOError:
         return 2
     except TransportConnectionError:
