@@ -9,3 +9,4 @@ scripts/__pycache__/*
 control.db
 test.py
 scripts/__pycache__/000_test_file_exists.cpython-36.pyc
+help
