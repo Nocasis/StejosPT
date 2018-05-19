@@ -59,7 +59,7 @@ def make_report(scan_time):
         'comp_data'   : compliances
         }
     render_data.update(checks_counts)
-    print(render_data)
+    #print(render_data)
     #report
     env = Environment(
         loader=FileSystemLoader('templates'),
